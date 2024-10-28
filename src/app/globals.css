@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'DynaPuff';
+  src: url('/fonts/DynaPuff-VariableFont_wdth,wght.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
