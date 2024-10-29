@@ -14,17 +14,17 @@ export default function Register() {
   }})
 
   const api = process.env.NEXT_PUBLIC_API_URL
+  console.log(api)
   const router = useRouter()
 
   function handleChange(e) {
     const {name, value} = e.target;
-    console.log(name + value)
   }
 
   async function handleRegister(data) {
     console.log(data)
     try {
-      await axios.post(api + "register", data)
+      await axios.post(`${api}register`, data)
       router.push("/login")
     } catch (err) {
       alert("something went wrong!" + err)
