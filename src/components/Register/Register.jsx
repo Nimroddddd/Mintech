@@ -17,10 +17,6 @@ export default function Register() {
   console.log(api)
   const router = useRouter()
 
-  function handleChange(e) {
-    const {name, value} = e.target;
-  }
-
   async function handleRegister(data) {
     console.log(data)
     try {
