@@ -14,7 +14,6 @@ export default function Register() {
   }})
 
   const api = process.env.NEXT_PUBLIC_API_URL
-  console.log(api)
   const router = useRouter()
 
   async function handleRegister(data) {
