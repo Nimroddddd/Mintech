@@ -41,15 +41,13 @@ export default function Register() {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
             message: "invalid email address"
           }
-        })}
-        onChange={handleChange} />
+        })} />
         <p>{errors.email?.message}</p>
         <TextField
          id="outlined-basic" 
          label="Password" 
          variant="outlined" 
          {...register("password", {required: "Please input a valid password"})} 
-         onChange={handleChange}  
          />
         <p>{errors.password?.message}</p>
         <button type="submit" className="bg-yellow-300 hover:bg-yellow-200 py-3">Register</button>
