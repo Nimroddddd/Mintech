@@ -14,7 +14,6 @@ export default function Login() {
 
   function handleChange(e) {
     const {name, value} = e.target;
-    console.log(api)
     setDetails(prev => {return ({
       ...prev,
       [name]: value
