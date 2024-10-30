@@ -3,8 +3,14 @@ import axios from "axios";
 import { useState } from "react"
 import TextField from '@mui/material/TextField';
 import Link from "next/link";
+import LoadingComp from "../Loading/Loading";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+
+  const router = useRouter()
+
+  const [loading, setLoading] = useState(false)
   
   const [details, setDetails] = useState({
     email: "",
@@ -22,13 +28,23 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault()
-    console.log(e.target)
-    const hi = await axios.post(`${api}login`, details, {withCredentials: true})
-    alert(hi.data)
+    setLoading(true)
+    try {
+      const hi = await axios.post(`${api}login`, details, {withCredentials: true})
+      if(hi.data === "correct password") {
+        router.push("/")
+      } else {
+        alert("Incorrect password, please try again")
+      }
+    } catch (err) {
+      alert(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <div className="flex flex-col w-80">
+    <div className="flex flex-col w-80 mb-40">
       <h1 className="text-center mb-5 text-2xl font-bold">Welcome back!</h1>
       <form className="flex flex-col gap-5">
         <TextField 
@@ -47,9 +63,10 @@ export default function Login() {
         name="password"
         onChange={handleChange}
         />
-        <button type="submit" className="bg-yellow-300 hover:bg-yellow-200 py-3" onClick={handleLogin}>Login</button>
+        <button type="submit" className="bg-foreground hover:bg-hoverColor py-3 text-white" onClick={handleLogin}>Login</button>
       </form>
-      <p className="mt-3">Don&apos;t have an account? <Link href="/register" className="text-yellow-500">Sign up here</Link></p>
+      <p className="mt-3">Don&apos;t have an account? <Link href="/register" className="text-foreground">Sign up here</Link></p>
+      {loading && <LoadingComp />}
     </div>
   )
 }

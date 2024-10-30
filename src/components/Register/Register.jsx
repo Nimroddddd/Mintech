@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import axios from "axios"
 import TextField from '@mui/material/TextField';
 import Link from "next/link";
-
+import LoadingComp from "../Loading/Loading";
+import { useState } from "react";
 
 export default function Register() {
 
@@ -13,16 +14,26 @@ export default function Register() {
     password: ""
   }})
 
+  const [loading, setLoading] = useState(false)
+
   const api = process.env.NEXT_PUBLIC_API_URL
   const router = useRouter()
 
   async function handleRegister(data) {
     console.log(data)
+    setLoading(true)
     try {
-      await axios.post(`${api}register`, data)
-      router.push("/login")
+      const response = await axios.post(`${api}register`, data)
+      if (response.data === "user already exists") {
+        alert(response.data)
+      } else {
+        alert("Registration successful!")
+        router.push("/login")
+      }
     } catch (err) {
       alert("something went wrong!" + err)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -49,9 +60,10 @@ export default function Register() {
          {...register("password", {required: "Please input a valid password"})} 
          />
         <p>{errors.password?.message}</p>
-        <button type="submit" className="bg-yellow-300 hover:bg-yellow-200 py-3">Register</button>
+        <button type="submit" className="bg-foreground hover:bg-seconndary py-3 text-white">Register</button>
       </form>
-      <p className="mt-3">Already have an account? <Link href="/login" className="text-yellow-500">Login</Link></p>
+      <p className="mt-3">Already have an account? <Link href="/login" className="text-foreground">Login</Link></p>
+      {loading && <LoadingComp />}
     </div>
   )
 }
