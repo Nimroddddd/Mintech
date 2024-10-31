@@ -2,12 +2,12 @@ const phones = [
   {
     name: "iPhone 16",
     img: "ip16.jpg",
-    price: "699"
+    price: "649"
   },
   {
     name: "iPhone 16 Pro",
     img: "ip16p.webp",
-    price: "649"
+    price: "699"
   },
   {
     name: "iPhone 16 Pro Max",
@@ -22,7 +22,7 @@ const phones = [
   {
     name: "iPhone 14",
     img: "ip14.webp",
-    price: "499.99"
+    price: "499"
   },
   {
     name: "Samsung S22",
