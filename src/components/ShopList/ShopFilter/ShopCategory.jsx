@@ -34,7 +34,7 @@ export default function ShopCategory(props) {
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={category}
-        label="Age"
+        label="category"
         onChange={handleChange}
       >
         <MenuItem value="phones">Phones</MenuItem>

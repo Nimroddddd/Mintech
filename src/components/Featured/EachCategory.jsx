@@ -20,7 +20,7 @@ export default function EachCategory(props) {
 
   return(
     <div>
-      <div onMouseOver={handleOver} onMouseLeave={handleLeave} className="bg-cover bg-center h-[337px] w-[600px] shadow-2xl flex items-center justify-center" style={{backgroundImage: `url("${props.img}")`}}>
+      <div onMouseOver={handleOver} onMouseLeave={handleLeave} className="bg-cover bg-center h-[147px] w-[250px] sm:h-[225px] sm:w-[400px] md:h-[337px] md:w-[600px] shadow-2xl flex items-center justify-center" style={{backgroundImage: `url("${props.img}")`}}>
         {focus && <div className="w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
           <Link href={`shop/${destination}`}><button className="opacity-100 text-2xl py-2 px-10 bg-foreground text-white">Shop now</button></Link>
         </div> }

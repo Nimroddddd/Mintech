@@ -38,7 +38,7 @@ export default function Register() {
   }
 
   return (
-    <div className="flex flex-col w-80">
+    <div className="flex flex-col w-80 mb-40">
       <h1 className="text-center mb-5 text-2xl font-bold">Create a new account</h1>
       <form onSubmit={handleSubmit(data => {console.log(data); handleRegister(data)})} className="flex flex-col gap-2">
         <TextField 
