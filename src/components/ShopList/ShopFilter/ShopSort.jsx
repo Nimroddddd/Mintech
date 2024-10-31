@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useEffect, useState } from 'react';
+import { setCookie } from 'cookies-next';
 
 export default function ShopSort() {
 
@@ -11,12 +12,15 @@ export default function ShopSort() {
 
   function handleChange(e) {
     setSort(e.target.value)
+    setCookie("sort", e.target.value)
     
   }
 
   useEffect(() => {
     setSort("latest")
+    setCookie("sort", "latest")
   }, [])
+
 
 
   return (

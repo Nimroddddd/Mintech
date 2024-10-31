@@ -11,6 +11,7 @@ export async function generateStaticParams() {
   }));
 }
 
+
 export default async function Shop({params}) {
   const {category} = await params;
   return (
