@@ -1,5 +1,7 @@
 // import axios from "axios";
 
+import axios from "axios";
+
 export async function generateStaticParams() {
   // Define all the possible category values you want to pre-render
   // const response = await axios.get(`${api}productids`)
@@ -22,7 +24,22 @@ export async function generateStaticParams() {
 
 export default async function ProductDetail({params}) {
   const {productid} = await params
+  const api = process.env.NEXT_PUBLIC_API_URL
+  const response = await axios.get(`${api}product/${productid}`)
+  const {category, name, price, img, description} = response.data
   return(
-    <h1>{productid}</h1>
+    <div className="flex py-5 px-5 gap-3">
+      <div className="border border-black basis-full">
+        <h1>hello</h1>
+        <img src={`/${category}/${img}`} className="h-[600px] w-[700px]" />
+      </div>
+      <div className="basis-full">
+        <p>{name}</p>
+        <p>{description}</p>
+        <p>{price}</p>
+        <p>{description}</p>
+
+      </div>
+    </div>
   )
 }
