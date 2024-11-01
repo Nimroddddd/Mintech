@@ -1,5 +1,3 @@
-// import axios from "axios";
-
 import axios from "axios";
 
 export async function generateStaticParams() {
@@ -28,17 +26,23 @@ export default async function ProductDetail({params}) {
   const response = await axios.get(`${api}product/${productid}`)
   const {category, name, price, img, description} = response.data
   return(
-    <div className="flex py-5 px-5 gap-3">
-      <div className="border border-black basis-full">
-        <h1>hello</h1>
+    <div className="flex py-5 px-5 gap-10 mt-20">
+      <div className="basis-full">
         <img src={`/${category}/${img}`} className="h-[600px] w-[700px]" />
       </div>
-      <div className="basis-full">
-        <p>{name}</p>
-        <p>{description}</p>
-        <p>{price}</p>
-        <p>{description}</p>
-
+      <div className="basis-full flex flex-col px-10">
+        <p className="text-2xl mb-4 font-bold">{name}</p>
+        <p className="text-xl font-bold mb-6">${price}</p>
+        <hr />
+        <p className="mt-6">{description}</p>
+        <div className="flex flex-row gap-2 w-[60%]">
+          <button className="bg-foreground py-2 px-1 w-full rounded text-white mt-3 hover:bg-hoverColor">Add to cart</button>
+          <button className="bg-foreground py-2 px-1 w-full rounded text-white mt-3 hover:bg-hoverColor">Buy Now</button>
+        </div>
+        <p className="font-bold text-xl mt-12 mb-5">Shipping options</p>
+        <p><span className="font-bold">Fast delivery: </span>Delivery between 5-7 days.</p>
+        <p><span className="font-bold">Fast delivery: </span>Delivery between 5-7 days.</p>
+        <p><span className="font-bold">Fast delivery: </span>Delivery between 5-7 days.</p>
       </div>
     </div>
   )

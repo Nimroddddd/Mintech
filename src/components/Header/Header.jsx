@@ -9,6 +9,7 @@ import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react"
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandLessIcon from '@mui/icons-material/ExpandMore';
+// import DisplayCart from "./DisplayCart"
 
 
 const dynapuff = DynaPuff({
@@ -57,7 +58,7 @@ export default function Header() {
   
   return (
     <div>
-      <div className="py-5 px-5 md:px-11 flex justify-between w-full bg-background shadow-2xl text-black sticky top-0">
+      <div className="py-5 px-5 md:px-11 flex justify-between w-full bg-background shadow-2xl text-black fixed top-0 left-0 z-10">
         <ul className="gap-4 text-base lg:text-xl hidden md:flex">
           <li><Link href="/">Home</Link></li>
           <li>Shop</li>
