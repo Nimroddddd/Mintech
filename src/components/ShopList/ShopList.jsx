@@ -29,7 +29,7 @@ export default function ShopList(props) {
     }
     
     getDevices()
-  }, [props.category])
+  }, [props.category, api])
 
   // if (props.category == "phones") {
   //   devices = phones
