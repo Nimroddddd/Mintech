@@ -20,7 +20,9 @@ export default function RootLayout(
   return (
     <html lang="en">
       <body className="bg-background text-black">
-        <Header />
+        <div className="sticky top-0 inset-0">
+          <Header />
+        </div>
         {children}
         <Footer />
       </body>

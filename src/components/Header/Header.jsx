@@ -9,7 +9,7 @@ import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react"
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandLessIcon from '@mui/icons-material/ExpandMore';
-// import DisplayCart from "./DisplayCart"
+import DisplayCart from "./Cart/DisplayCart"
 
 
 const dynapuff = DynaPuff({
@@ -21,6 +21,7 @@ export default function Header() {
 
   const [logged, setLogged] = useState(false)
   const [dropped, setDropped] = useState(false)
+  const [cart, setCart] = useState(false)
 
   useEffect(() => {
     checkLogged()
@@ -58,7 +59,7 @@ export default function Header() {
   
   return (
     <div>
-      <div className="py-5 px-5 md:px-11 flex justify-between w-full bg-background shadow-2xl text-black fixed top-0 left-0 z-10">
+      <div className="py-5 px-5 md:px-11 flex justify-between w-full bg-background shadow-2xl text-black">
         <ul className="gap-4 text-base lg:text-xl hidden md:flex">
           <li><Link href="/">Home</Link></li>
           <li>Shop</li>
@@ -69,12 +70,13 @@ export default function Header() {
         <ul className="flex gap-4 text-base lg:text-xl">
           <div className="hidden md:block"><Link href="/login"><Account /></Link></div>
           <Wishlist />
-          <Cart />
+          <div onClick={() => {setCart(prev => !prev)}}><Link href=""><Cart /></Link></div>
           {logged && <Link href="" onClick={logout}><Logout /></Link>}
           <div className="px-2 py-1 bg-foreground text-white md:hidden" onClick={handleDrop}>{dropped ? <ExpandLessIcon /> : <MenuIcon />}</div>
         </ul>
       </div>
       {dropped && <DropdownHeader />}
+      {cart && <DisplayCart />}
     </div>
   )
 }
