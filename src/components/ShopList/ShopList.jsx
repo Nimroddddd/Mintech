@@ -1,13 +1,14 @@
 "use client"
 import { useEffect, useState } from "react"
-import { PhoneItem, TVItem, LaptopItem, SmartwatchItem } from "./ShopItem"
-// import { phones, tvs, laptops, smartwatches } from "./data"
+import ListDevices from "./ShopItem"
 import { getCookie } from "cookies-next"
 import axios from "axios"
 
 export default function ShopList(props) {
 
   const [sortBy, setSortBy] = useState("")
+  const [devices, setDevices] = useState([])
+  const api = process.env.NEXT_PUBLIC_API_URL
 
   useEffect(getSort,[])
 
@@ -17,10 +18,6 @@ export default function ShopList(props) {
   }
 
   setInterval(getSort, 1000)
-  
-  const [devices, setDevices] = useState([])
-  const api = process.env.NEXT_PUBLIC_API_URL
-
 
   useEffect(() => {
     async function getDevices() {
@@ -28,18 +25,8 @@ export default function ShopList(props) {
       setDevices(response.data)
     }
     
-    getDevices()
+    getDevices();
   }, [props.category, api])
-
-  // if (props.category == "phones") {
-  //   devices = phones
-  // } else if (props.category == "televisions") {
-  //   devices = tvs
-  // } else if (props.category == "smartwatches") {
-  //   devices = smartwatches
-  // } else if (props.category == "laptops") {
-  //   devices = laptops
-  // }
 
   if (sortBy == "price_asc") {
     devices.sort((a, b) => a.price - b.price)
@@ -78,10 +65,7 @@ export default function ShopList(props) {
 
   return (
     <div className="flex gap-20 flex-wrap">
-      {props.category == "phones" && devices.map(PhoneItem)}
-      {props.category == "televisions" && devices.map(TVItem)}
-      {props.category == "laptops" && devices.map(LaptopItem)}
-      {props.category == "smartwatches" && devices.map(SmartwatchItem)}
+      <ListDevices category={props.category} devices={devices} />
     </div>
   )
 }

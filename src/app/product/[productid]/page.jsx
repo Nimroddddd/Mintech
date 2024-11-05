@@ -11,7 +11,7 @@ export async function generateStaticParams() {
     'ph_ip14',   'wa_s544', 'wa_s440',
     'wa_se44',   'wa_s945', 'ph_ip16pm',
     'tv_s65i', 'tv_s43i', 'tv_s50i',
-    'tv_s85i',   'tv_s43i', 'tv_s32i',
+    'tv_s85i',   'tv_s43i_2', 'tv_s32i',
     'tv_s55i_2', 'tv_s55i'
   ]
 
@@ -24,7 +24,7 @@ export default async function ProductDetail({params}) {
   const {productid} = await params
   const api = process.env.NEXT_PUBLIC_API_URL
   const response = await axios.get(`${api}product/${productid}`)
-  const {category, name, price, img, description} = response.data
+  const {category, name, price, img, description} = response.data;
   return(
     <div className="flex flex-col md:flex-row py-5 px-5 gap-10 mt-20">
       <div className="basis-full flex items-center justify-center">

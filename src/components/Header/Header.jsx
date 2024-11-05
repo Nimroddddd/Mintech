@@ -5,11 +5,11 @@ import Cart from "./Cart"
 import Link from "next/link"
 import Logout from "./Logout"
 import { DynaPuff } from "next/font/google"
-import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react"
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandLessIcon from '@mui/icons-material/ExpandMore';
 import DisplayCart from "./Cart/DisplayCart"
+import axios from "axios"
 
 
 const dynapuff = DynaPuff({
@@ -22,14 +22,17 @@ export default function Header() {
   const [logged, setLogged] = useState(false)
   const [dropped, setDropped] = useState(false)
   const [cart, setCart] = useState(false)
+  const api = process.env.NEXT_PUBLIC_API_URL
+
 
   useEffect(() => {
     checkLogged()
   }, [logged])
 
-  function checkLogged() {
-    const currentCookie = getCookie('jwt')
-    if(currentCookie) {
+  async function checkLogged() {
+    const response = await axios.get(`${api}user`, {withCredentials: true})
+    const {message} = response.data
+    if(message == "logged in") {
       setLogged(true)
     } else {
       setLogged(false)
@@ -39,7 +42,8 @@ export default function Header() {
   function logout() {
     setTimeout(checkLogged, 1000)
   }
-  setInterval(checkLogged, 3000)
+  
+  setInterval(checkLogged, 5000)
 
   function DropdownHeader() {
     return (

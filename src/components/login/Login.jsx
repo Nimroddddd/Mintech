@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Link from "next/link";
 import LoadingComp from "../Loading/Loading";
 import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
 
 export default function Login() {
 
@@ -30,8 +31,11 @@ export default function Login() {
     e.preventDefault()
     setLoading(true)
     try {
-      const hi = await axios.post(`${api}login`, details, {withCredentials: true})
-      if(hi.data === "correct password") {
+      const response = await axios.post(`${api}login`, details, {withCredentials: true})
+      // const hi = await response.json()
+      const {message, cart} = response.data
+      setCookie("cart", cart)
+      if(message === "correct password") {
         router.push("/")
       } else {
         alert("Incorrect password, please try again")
