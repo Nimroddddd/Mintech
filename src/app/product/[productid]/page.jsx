@@ -30,7 +30,7 @@ export default async function ProductDetail({params}) {
       <div className="basis-full flex items-center justify-center">
         <img src={`/${category}/${img}`} className="" />
       </div>
-      <div className="basis-full flex flex-col px-10 md:flex">
+      <div className="basis-full flex flex-col px-10">
         <p className="text-2xl mb-4 font-bold">{name}</p>
         <p className="text-xl font-bold mb-6">${price}</p>
         <hr />
