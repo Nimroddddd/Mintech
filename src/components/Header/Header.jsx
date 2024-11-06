@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandLessIcon from '@mui/icons-material/ExpandMore';
 import DisplayCart from "./Cart/DisplayCart"
-import axios from "axios"
+import { useAuth } from "../auth/AuthContext"
 
 
 const dynapuff = DynaPuff({
@@ -19,31 +19,19 @@ const dynapuff = DynaPuff({
 
 export default function Header() {
 
-  const [logged, setLogged] = useState(false)
+  const { logged, checkLogged } = useAuth()
   const [dropped, setDropped] = useState(false)
   const [cart, setCart] = useState(false)
-  const api = process.env.NEXT_PUBLIC_API_URL
-
 
   useEffect(() => {
-    checkLogged()
-  }, [logged])
+    checkLogged();
 
-  async function checkLogged() {
-    const response = await axios.get(`${api}user`, {withCredentials: true})
-    const {message} = response.data
-    if(message == "logged in") {
-      setLogged(true)
-    } else {
-      setLogged(false)
-    }
-  }
+  }, [])
 
   function logout() {
     setTimeout(checkLogged, 1000)
   }
   
-  setInterval(checkLogged, 5000)
 
   function DropdownHeader() {
     return (

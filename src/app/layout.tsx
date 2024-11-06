@@ -2,6 +2,8 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import "./globals.css"
+import { AuthProvider } from "@/components/auth/AuthContext"
+
 
 
 export const metadata: Metadata = {
@@ -18,14 +20,16 @@ export default function RootLayout(
   }
 ) {
   return (
-    <html lang="en">
-      <body className="bg-background text-black">
-        <div className="sticky top-0 inset-0">
-          <Header />
-        </div>
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className="bg-background text-black">
+          <div className="sticky top-0 inset-0">
+            <Header />
+          </div>
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </AuthProvider>
   )
 }

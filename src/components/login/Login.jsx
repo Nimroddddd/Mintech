@@ -6,13 +6,13 @@ import Link from "next/link";
 import LoadingComp from "../Loading/Loading";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
+import { useAuth } from "../auth/AuthContext";
 
 export default function Login() {
 
   const router = useRouter()
-
+  const { checkLogged } = useAuth()
   const [loading, setLoading] = useState(false)
-  
   const [details, setDetails] = useState({
     email: "",
     password: ""
@@ -36,6 +36,7 @@ export default function Login() {
       const {message, cart} = response.data
       setCookie("cart", cart)
       if(message === "correct password") {
+        checkLogged()
         router.push("/")
       } else {
         alert("Incorrect password, please try again")
