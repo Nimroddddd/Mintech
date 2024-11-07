@@ -12,7 +12,11 @@ export function AuthProvider({ children }) {
     try {
       const response = await axios.get(`${api}user`, { withCredentials: true });
       const { message } = response.data;
-      setLogged(message === "logged in");
+      if (message === "logged in") {
+        setLogged(true)
+      } else {
+        setLogged(false)
+      }
     } catch (error) {
       setLogged(false);
       console.error("Error checking login status:", error);

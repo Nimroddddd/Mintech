@@ -13,8 +13,8 @@ export default function DisplayCart() {
   const api = process.env.NEXT_PUBLIC_API_URL
 
   async function checkLocalCart() {
-    const currentCart = getCookie("cart") || [];
-    const parsedCart = JSON.parse(currentCart);
+    const currentCart = getCookie("cart");
+    const parsedCart = currentCart ? JSON.parse(currentCart) : [];
     const response = await axios.post(`${api}get-public-cart`, parsedCart)
     const result = response.data
     setCart(result)
@@ -26,9 +26,8 @@ export default function DisplayCart() {
         const response = await axios.get(`${api}get-cart`, {withCredentials: true})
         const newCart = response.data
         setCart(newCart)
-      } catch (err) {
+      } catch {
         checkLocalCart()
-        console.error(err)
       }
     }
 
@@ -42,8 +41,8 @@ export default function DisplayCart() {
   }
 
   return (
-    <div className="w-full h-screen bg-black bg-opacity-50 absolute overflow-scroll">
-      <div className="flex flex-col items-center ml-[70%] bg-background">
+    <div className="flex justify-end w-full h-screen bg-black bg-opacity-50 absolute [z-10000]">
+      <div className="flex flex-col items-center bg-background  min-w-full sm:min-w-[460px] z-[12313123]">
         <div className="w-full max-h-[70vh] text-center overflow-y-scroll">
           <p className="text-2xl mb-5">My Cart</p>
           <hr />

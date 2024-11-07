@@ -7,7 +7,7 @@ import Logout from "./Logout"
 import { DynaPuff } from "next/font/google"
 import { useEffect, useState } from "react"
 import MenuIcon from '@mui/icons-material/Menu';
-import ExpandLessIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import DisplayCart from "./Cart/DisplayCart"
 import { useAuth } from "../auth/AuthContext"
 
@@ -35,10 +35,10 @@ export default function Header() {
 
   function DropdownHeader() {
     return (
-      <ul className="flex flex-col w-screen items-start gap-2 px-6 text-xl py-5">
+      <ul className="flex flex-col w-screen items-start gap-2 px-6 text-xl py-5 bg-background">
         <li onClick={handleDrop}><Link href="/">Home</Link></li>
-        <li onClick={handleDrop}>Shop</li>
-        <li onClick={handleDrop}>About us</li>
+        <li onClick={handleDrop}><Link href="/shop/phones">Shop</Link></li>
+        <li onClick={handleDrop}><Link href="https://aminabdulkabir.netlify.app">About us</Link></li>
         <li onClick={handleDrop}>Contact</li>
         <Link href="/login" onClick={handleDrop}><Account /></Link>
       </ul>
@@ -54,12 +54,12 @@ export default function Header() {
       <div className="py-5 px-5 md:px-11 flex justify-between w-full bg-background shadow-2xl text-black">
         <ul className="gap-4 text-base lg:text-xl hidden md:flex">
           <li><Link href="/">Home</Link></li>
-          <li>Shop</li>
-          <li>About us</li>
+          <li><Link href="/shop/phones">Shop</Link></li>
+          <li><Link href="https://aminabdulkabir.netlify.app">About us</Link></li>
           <li>Contact</li>
         </ul>
         <h2 className={`${dynapuff.className} text-2xl`}>Mintech</h2>
-        <ul className="flex gap-4 text-base lg:text-xl">
+        <ul className="flex gap-2 sm:gap-4 text-base lg:text-xl">
           <div className="hidden md:block"><Link href="/login"><Account /></Link></div>
           <Wishlist />
           <div onClick={() => {setCart(prev => !prev)}}><Link href=""><Cart /></Link></div>

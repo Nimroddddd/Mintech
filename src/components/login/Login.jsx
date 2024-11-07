@@ -32,7 +32,6 @@ export default function Login() {
     setLoading(true)
     try {
       const response = await axios.post(`${api}login`, details, {withCredentials: true})
-      // const hi = await response.json()
       const {message, cart} = response.data
       setCookie("cart", cart)
       if(message === "correct password") {

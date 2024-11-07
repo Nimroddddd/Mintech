@@ -10,8 +10,8 @@ export default function Logout() {
 
   return (
     <li className='flex border rounded px-2 py-1 bg-foreground text-white' onClick={handleLogout}>
-      <p className='mr-2'>Logout</p>
+      <p className='mr-2 hidden sm:inline'>Logout</p>
       <LogoutIcon />
     </li>
-  )
+  ) 
 }

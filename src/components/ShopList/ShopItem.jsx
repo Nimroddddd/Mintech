@@ -33,8 +33,7 @@ function PhoneItem({item, index}) {
       setCookie("cart", [item.product_id])
     }
     checkCart()
-    const response = await axios.get(`${api}add-to-cart/${item.product_id}`, {withCredentials: true})
-    console.log(response)
+    await axios.get(`${api}add-to-cart/${item.product_id}`, {withCredentials: true})
   }
 
   async function handleRemove() {
