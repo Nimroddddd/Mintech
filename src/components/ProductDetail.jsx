@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { getCookie, setCookie } from "cookies-next";
+import { cartQuery } from "@/controllers/api"
 
 
 export default function ProductDetail({productid}) {
@@ -19,28 +20,13 @@ export default function ProductDetail({productid}) {
     }
   }
 
-  async function handleAdd() {
-    let currentCart = []
-    currentCart = getCookie("cart")
-    if (currentCart) {
-      if (!currentCart.includes(productid)){
-        const newCart = JSON.parse(currentCart)
-        newCart.push(productid);
-        setCookie("cart", newCart)
-      }
-    } else {
-      setCookie("cart", [productid])
-    }
+  function handleAdd() {
+    cartQuery.handleAdd(productid)
     checkCart()
-    await axios.get(`${api}add-to-cart/${productid}`, {withCredentials: true})
   }
 
-  async function handleRemove() {
-    const currentCart = getCookie("cart") || [];
-    const parsedCart = JSON.parse(currentCart);
-    const filteredCart = parsedCart.filter(product => product != productid)
-    setCookie("cart", filteredCart);
-    await axios.delete(`${api}delete-from-cart/${productid}`, {withCredentials: true})
+  function handleRemove() {
+    cartQuery.handleRemove(productid)
     checkCart()
   }
 

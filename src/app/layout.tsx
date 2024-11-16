@@ -23,7 +23,7 @@ export default function RootLayout(
     <AuthProvider>
       <html lang="en">
         <body className="bg-background text-black">
-          <div className="sticky top-0 inset-0">
+          <div className="sticky top-0 inset-0 z-10">
             <Header />
           </div>
           {children}

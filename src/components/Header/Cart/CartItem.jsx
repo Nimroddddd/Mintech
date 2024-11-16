@@ -3,20 +3,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { getCookie, setCookie } from 'cookies-next';
 import { useState } from 'react';
 import axios from 'axios';
+import { cartQuery } from '@/controllers/api';
 
 export default function CartItem({product, removed}) {
 
   const [count, setCount] = useState(1)
-  const api = process.env.NEXT_PUBLIC_API_URL
 
   function handleRemove(removedProduct) {
-    axios.delete(`${api}delete-from-cart/${removedProduct}`, {withCredentials: true})
-    const currentCart = getCookie("cart") || [];
-    const parsedCart = JSON.parse(currentCart);
-    const filteredCart = parsedCart.filter(product => product != removedProduct)
-    setCookie("cart", filteredCart);
+    cartQuery.handleRemove(removedProduct)
     removed()
-
   }
 
   return(

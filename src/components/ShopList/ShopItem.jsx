@@ -2,10 +2,10 @@ import Link from "next/link"
 import { getCookie, setCookie } from "cookies-next"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { cartQuery } from "@/controllers/api"
 
 function PhoneItem({item, index}) {
 
-  const api = process.env.NEXT_PUBLIC_API_URL
   const [added, setAdded] = useState(false)
 
 
@@ -20,28 +20,13 @@ function PhoneItem({item, index}) {
 
   useEffect(checkCart)
 
-  async function handleAdd() {
-    let currentCart = []
-    currentCart = getCookie("cart")
-    if (currentCart) {
-      if (!currentCart.includes(item.product_id)){
-        const newCart = JSON.parse(currentCart)
-        newCart.push(item.product_id);
-        setCookie("cart", newCart)
-      }
-    } else {
-      setCookie("cart", [item.product_id])
-    }
+  function handleAdd() {
+    cartQuery.handleAdd(item.product_id)
     checkCart()
-    await axios.get(`${api}add-to-cart/${item.product_id}`, {withCredentials: true})
   }
 
-  async function handleRemove() {
-    const currentCart = getCookie("cart") || [];
-    const parsedCart = JSON.parse(currentCart);
-    const filteredCart = parsedCart.filter(product => product != item.product_id)
-    setCookie("cart", filteredCart);
-    await axios.delete(`${api}delete-from-cart/${item.product_id}`, {withCredentials: true})
+  function handleRemove() {
+    cartQuery.handleRemove(item.product_id)
     checkCart()
   }
 
@@ -78,28 +63,13 @@ function TVItem({item, index}) {
 
   useEffect(checkCart)
 
-  async function handleAdd() {
-    let currentCart = []
-    currentCart = getCookie("cart")
-    if (currentCart) {
-      if (!currentCart.includes(item.product_id)){
-        const newCart = JSON.parse(currentCart)
-        newCart.push(item.product_id);
-        setCookie("cart", newCart)
-      }
-    } else {
-      setCookie("cart", [item.product_id])
-    }
+  function handleAdd() {
+    cartQuery.handleAdd(item.product_id)
     checkCart()
-    await axios.get(`${api}add-to-cart/${item.product_id}`, {withCredentials: true})
   }
 
-  async function handleRemove() {
-    const currentCart = getCookie("cart") || [];
-    const parsedCart = JSON.parse(currentCart);
-    const filteredCart = parsedCart.filter(product => product != item.product_id)
-    setCookie("cart", filteredCart);
-    await axios.delete(`${api}delete-from-cart/${item.product_id}`, {withCredentials: true})
+  function handleRemove() {
+    cartQuery.handleRemove(item.product_id)
     checkCart()
   }
 
@@ -137,29 +107,13 @@ function LaptopItem({item, index}) {
 
   useEffect(checkCart)
 
-  async function handleAdd() {
-    let currentCart = []
-    currentCart = getCookie("cart")
-    if (currentCart) {
-      if (!currentCart.includes(item.product_id)){
-        const newCart = JSON.parse(currentCart)
-        newCart.push(item.product_id);
-        setCookie("cart", newCart)
-      }
-    } else {
-      setCookie("cart", [item.product_id])
-    }
+  function handleAdd() {
+    cartQuery.handleAdd(item.product_id)
     checkCart()
-    const response = await axios.get(`${api}add-to-cart/${item.product_id}`, {withCredentials: true})
-    console.log(response)
   }
 
-  async function handleRemove() {
-    const currentCart = getCookie("cart") || [];
-    const parsedCart = JSON.parse(currentCart);
-    const filteredCart = parsedCart.filter(product => product != item.product_id)
-    setCookie("cart", filteredCart);
-    await axios.delete(`${api}delete-from-cart/${item.product_id}`, {withCredentials: true})
+  function handleRemove() {
+    cartQuery.handleRemove(item.product_id)
     checkCart()
   }
 
@@ -195,29 +149,13 @@ function SmartwatchItem({item, index}) {
 
   useEffect(checkCart)
 
-  async function handleAdd() {
-    let currentCart = []
-    currentCart = getCookie("cart")
-    if (currentCart) {
-      if (!currentCart.includes(item.product_id)){
-        const newCart = JSON.parse(currentCart)
-        newCart.push(item.product_id);
-        setCookie("cart", newCart)
-      }
-    } else {
-      setCookie("cart", [item.product_id])
-    }
+  function handleAdd() {
+    cartQuery.handleAdd(item.product_id)
     checkCart()
-    const response = await axios.get(`${api}add-to-cart/${item.product_id}`, {withCredentials: true})
-    console.log(response)
   }
 
-  async function handleRemove() {
-    const currentCart = getCookie("cart") || [];
-    const parsedCart = JSON.parse(currentCart);
-    const filteredCart = parsedCart.filter(product => product != item.product_id)
-    setCookie("cart", filteredCart);
-    await axios.delete(`${api}delete-from-cart/${item.product_id}`, {withCredentials: true})
+  function handleRemove() {
+    cartQuery.handleRemove(item.product_id)
     checkCart()
   }
 

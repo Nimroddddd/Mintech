@@ -4,6 +4,7 @@ import CartItem from "./CartItem"
 import Total from "./Total"
 import axios from "axios"
 import { getCookie } from "cookies-next"
+import { useCartStore } from "@/controllers/store"
 
 
 export default function DisplayCart() {
@@ -11,21 +12,26 @@ export default function DisplayCart() {
 
   const [cart, setCart] = useState([])
   const api = process.env.NEXT_PUBLIC_API_URL
+  const { total, setTotal, count, setCount } = useCartStore()
 
   async function checkLocalCart() {
     const currentCart = getCookie("cart");
     const parsedCart = currentCart ? JSON.parse(currentCart) : [];
     const response = await axios.post(`${api}get-public-cart`, parsedCart)
-    const result = response.data
+    const { result, total, count } = response.data
     setCart(result)
+    setCount(count)
+    setTotal(total)
   }
 
   useEffect(() => {
     async function checkOnlineCart() {
       try {
         const response = await axios.get(`${api}get-cart`, {withCredentials: true})
-        const newCart = response.data
+        const { filteredResult:newCart, total, count } = response.data
         setCart(newCart)
+        setCount(count)
+        setTotal(total)
       } catch {
         checkLocalCart()
       }
@@ -48,7 +54,7 @@ export default function DisplayCart() {
           <hr />
           {cart.map(ListCart)}
         </div>
-        <Total />
+        <Total  total={total} count={count} />
       </div>
     </div>
   )
