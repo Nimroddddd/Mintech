@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { getCookie, setCookie } from "cookies-next"
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { cartQuery } from "@/controllers/api"
 

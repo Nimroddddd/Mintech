@@ -17,10 +17,10 @@ export default async function Shop({params}) {
   return (
     <div className="mt-10 flex flex-col py-10 px-14">
       <div className="flex justify-evenly mb-20">
-        <div className="min-w-32">
+        <div className="w-28 sm:min-w-32">
           <ShopSort />
         </div>
-        <div className="min-w-32">
+        <div className="w-28 sm:min-w-32 ">
           <ShopCategory category={category} />
         </div>
       </div>
