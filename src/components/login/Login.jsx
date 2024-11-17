@@ -14,6 +14,10 @@ import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import { Slide, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 
@@ -31,6 +35,17 @@ export default function Login() {
   })
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const error = (message) => {toast.error(`${message}`, {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Slide,
+    });}
 
   const api = process.env.NEXT_PUBLIC_API_URL
 
@@ -53,7 +68,7 @@ export default function Login() {
         checkLogged()
         router.push("/")
       } else {
-        alert(message)
+        error(message)
       }
     } catch (err) {
       alert(err)
@@ -74,14 +89,6 @@ export default function Login() {
         name="email"
         onChange={handleChange}
         />
-        {/* <TextField 
-        id="outlined-basic" 
-        label="Password" 
-        variant="outlined"
-        value={details.password}
-        name="password"
-        onChange={handleChange}
-        /> */}
         <FormControl variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
           <OutlinedInput

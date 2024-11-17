@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import "./globals.css"
 import { AuthProvider } from "@/components/auth/AuthContext"
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -28,6 +29,7 @@ export default function RootLayout(
           </div>
           {children}
           <Footer />
+          <ToastContainer />
         </body>
       </html>
     </AuthProvider>
