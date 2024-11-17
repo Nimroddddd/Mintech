@@ -45,16 +45,16 @@ export default function Register() {
   async function handleRegister(data) {
     setLoading(true)
     try {
-      const response = await axios.post(`${api}register`, data)
-      console.log(response)
-      if (response) {
-        success("Registration Succesful!")
-        router.push("/login")
-      } else {
-        error("User Already Exists!")
-      }
+      await axios.post(`${api}register`, data)
+      success("Registration Succesful!")
+      router.push("/login")
     } catch (err) {
-      error("Server is currently down.")
+      const { message } = err
+      if (message === "Network Error") {
+        error("Server is currently down.")
+      } else {
+        error("User Already Exists")
+      }
     } finally {
       setLoading(false)
     }
