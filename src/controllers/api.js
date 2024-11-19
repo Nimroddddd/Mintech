@@ -25,5 +25,26 @@ export const cartQuery = {
     const filteredCart = parsedCart.filter(product => product != id)
     setCookie("cart", filteredCart);
     await axios.delete(`${api}delete-from-cart/${id}`, {withCredentials: true})
+  },
+
+  handleCheck: async () => {
+    try {
+      const response = await axios.get(`${api}get-cart`, {withCredentials: true})
+      return response.data
+    } catch {
+      const currentCart = getCookie("cart");
+      const parsedCart = currentCart ? JSON.parse(currentCart) : [];
+      const response = await axios.post(`${api}get-public-cart`, parsedCart)
+      return response.data
+    }
+  },
+
+  handlePay: async (details) => {
+    try {
+      const response = await axios.post(`${api}pay`, details)
+      return response.data
+    } catch (err) {
+      return err
+    }
   }
 }

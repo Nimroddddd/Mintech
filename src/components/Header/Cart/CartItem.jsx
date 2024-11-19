@@ -2,15 +2,14 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getCookie, setCookie } from 'cookies-next';
 import { useState } from 'react';
-import axios from 'axios';
 import { cartQuery } from '@/controllers/api';
 
 export default function CartItem({product, removed}) {
 
   const [count, setCount] = useState(1)
 
-  function handleRemove(removedProduct) {
-    cartQuery.handleRemove(removedProduct)
+  async function handleRemove(removedProduct) {
+    await cartQuery.handleRemove(removedProduct)
     removed()
   }
 
