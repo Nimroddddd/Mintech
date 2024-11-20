@@ -11,12 +11,15 @@ export default function DisplayCart() {
 
   const [cart, setCart] = useState([])
   const { total, setTotal, count, setCount } = useCartStore()
+  const [loading, setLoading] = useState(true)
 
   async function checkCart() {
     const { filteredResult:newCart, total, count } = await cartQuery.handleCheck()
+    console.log(newCart)
     setCart(newCart)
     setCount(count)
     setTotal(total)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -28,6 +31,7 @@ export default function DisplayCart() {
       <CartItem product={item} key={index} removed={checkCart} />
     )
   }
+
 
   return (
     <div className="flex justify-end w-full h-screen bg-black bg-opacity-50 absolute">

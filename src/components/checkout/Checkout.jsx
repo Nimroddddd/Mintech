@@ -51,15 +51,15 @@ export default function ChekoutPage() {
     });
     console.log(details)
     const link = await cartQuery.handlePay(details);
-    router.push(link)
+    window.open(link, '_blank')
   }
 
   return (
     <div className='flex flex-col lg:flex-row'>
-      <div className="flex flex-col py-5 px-28 space-y-6 basis-full">
+      <div className="flex flex-col py-5 px-5 sm:px-28 space-y-6 basis-full">
         <p className='font-bold text-2xl'>Shipping Information</p>
-        <Stack spacing={2} direction="row">
-          <Button variant="outlined" onClick={() => setSelectedValue("deliver")} sx={{ textTransform: 'none' }}>
+        <div className='flex gap-6'>
+          <Button className='basis-full flex-1' variant="outlined" onClick={() => setSelectedValue("deliver")} sx={{ textTransform: 'none' }}>
             <Radio
               checked={selectedValue === 'deliver'}
               value="deliver"
@@ -69,7 +69,7 @@ export default function ChekoutPage() {
             <LocalShippingIcon style={{ marginRight: 8 }}/> 
             <p className={selectedValue === "deliver" ? undefined : `text-black`}>Delivery</p>
           </Button>
-          <Button variant="outlined" onClick={() => setSelectedValue("pick")} sx={{ textTransform: 'none' }}>
+          <Button className='basis-full flex-1' variant="outlined" onClick={() => setSelectedValue("pick")} sx={{ textTransform: 'none' }}>
             <Radio
               checked={selectedValue === 'pick'}
               value="pick"
@@ -79,7 +79,7 @@ export default function ChekoutPage() {
             <OutboxIcon style={{ marginRight: 8 }}/>
             <p className={selectedValue === "pick" ? undefined : `text-black`}>Pick up</p>
           </Button>
-        </Stack>
+        </div>
         <form className='space-y-8'>
           <TextField
             required
@@ -147,7 +147,7 @@ export default function ChekoutPage() {
           </div>
         </form>
       </div>
-      <div className="flex flex-col py-5 px-28 space-y-6 basis-full">
+      <div className="flex flex-col py-5 px-5 sm:px-28 space-y-6 basis-full">
         <p className='font-bold text-2xl'>Review Cart</p>
         <CheckoutCart pay={handlePayClick}/>
       </div>
