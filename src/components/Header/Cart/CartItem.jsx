@@ -1,16 +1,29 @@
 "use client"
 import DeleteIcon from '@mui/icons-material/Delete';
-import { getCookie, setCookie } from 'cookies-next';
 import { useState } from 'react';
 import { cartQuery } from '@/controllers/api';
 
-export default function CartItem({product, removed}) {
+export default function CartItem({product, updated}) {
 
-  const [count, setCount] = useState(1)
+  const [count, setCount] = useState(product.count)
 
   async function handleRemove(removedProduct) {
     await cartQuery.handleRemove(removedProduct)
-    removed()
+    updated()
+  }
+
+  function handleIncrease() {
+    setCount(prev => prev+1)
+    cartQuery.handleUpdate(count+1, product.product_id)
+    updated()
+  }
+
+  function handleDecrease() {
+    if (count > 1) {
+      setCount(prev => prev-1)
+      cartQuery.handleUpdate(count-1, product.product_id)
+      updated()
+    }
   }
 
   return(
@@ -26,9 +39,9 @@ export default function CartItem({product, removed}) {
         <div className='flex justify-between'>
           <p>${product.price}</p>
           <div className='flex gap-5 border border-gray-300 py-1 px-2 rounded'>
-            <button onClick={() => setCount(prev => prev-1)}>-</button>
+            <button onClick={handleDecrease}>-</button>
             <div>{count}</div>
-            <button onClick={() => setCount(prev => prev+1)}>+</button>
+            <button onClick={handleIncrease}>+</button>
           </div>
         </div>
       </div>

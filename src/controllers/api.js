@@ -46,5 +46,13 @@ export const cartQuery = {
     } catch (err) {
       return err
     }
+  },
+
+  handleUpdate: (count, id) => {
+    try {
+      axios.post(`${api}update-cart`, {count, id}, {withCredentials: true})
+    } catch {
+      console.log("error triggered")
+    }
   }
 }

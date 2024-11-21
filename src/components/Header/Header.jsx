@@ -10,6 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import DisplayCart from "./Cart/DisplayCart"
 import { useAuth } from "../auth/AuthContext"
+import { useCartStore } from "@/controllers/store"
 
 
 const dynapuff = DynaPuff({
@@ -21,7 +22,7 @@ export default function Header() {
 
   const { logged, checkLogged } = useAuth()
   const [dropped, setDropped] = useState(false)
-  const [cart, setCart] = useState(false)
+  const { displayCart, setDisplayCart } = useCartStore()
 
   useEffect(() => {
     checkLogged();
@@ -62,13 +63,13 @@ export default function Header() {
         <ul className="flex gap-2 sm:gap-4 text-base lg:text-xl">
           <div className="hidden md:block"><Link href="/login"><Account /></Link></div>
           <Wishlist />
-          <div onClick={() => {setCart(prev => !prev)}}><Link href=""><Cart /></Link></div>
+          <div onClick={() => setDisplayCart()}><Link href=""><Cart active={displayCart} /></Link></div>
           {logged && <Link href="" onClick={logout}><Logout /></Link>}
           <div className="px-2 py-1 bg-foreground text-white md:hidden" onClick={handleDrop}>{dropped ? <ExpandLessIcon /> : <MenuIcon />}</div>
         </ul>
       </div>
       {dropped && <DropdownHeader />}
-      {cart && <DisplayCart />}
+      {displayCart && <DisplayCart />}
     </div>
   )
 }

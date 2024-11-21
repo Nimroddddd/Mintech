@@ -21,7 +21,7 @@ export default function CheckoutCart({ pay }) {
 
   function ListCart(item, index) {
     return (
-      <CartItem product={item} key={index} removed={checkCart} />
+      <CartItem product={item} key={index} updated={checkCart} />
     )
   }
 

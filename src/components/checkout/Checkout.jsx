@@ -1,7 +1,6 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, 
-        Stack, 
         Radio, 
         TextField, 
         Checkbox, 
@@ -12,12 +11,11 @@ import { Button,
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import OutboxIcon from '@mui/icons-material/Outbox';
 import CheckoutCart from "./CheckoutCart"
-import { useRouter } from 'next/navigation';
 import { cartQuery } from '@/controllers/api';
+
 
 export default function ChekoutPage() {
 
-  const router = useRouter()
   const [selectedValue, setSelectedValue] = useState("deliver")
   const [station, setStation] = useState("")
   const [details, setDetails] = useState({
@@ -25,8 +23,7 @@ export default function ChekoutPage() {
     phone: "",
     email: "",
     amount: 0
-
-  })
+  });
 
   const handleStationChange = (event) => {
     setStation(event.target.value);
