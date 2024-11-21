@@ -39,16 +39,19 @@ export default function ChekoutPage() {
     })
   }
 
-  async function handlePayClick(total) {
+  async function handlePayClick() {
+    const link = await cartQuery.handlePay(details);
+    window.open(link, '_blank')
+  }
+
+  function updateMainTotal(total) {
     setDetails((prev) => {
       return {
         ...prev,
         amount: total
       }
-    });
+    })
     console.log(details)
-    const link = await cartQuery.handlePay(details);
-    window.open(link, '_blank')
   }
 
   return (
@@ -146,7 +149,7 @@ export default function ChekoutPage() {
       </div>
       <div className="flex flex-col py-5 px-5 sm:px-28 space-y-6 basis-full">
         <p className='font-bold text-2xl'>Review Cart</p>
-        <CheckoutCart pay={handlePayClick}/>
+        <CheckoutCart setMainTotal={updateMainTotal} pay={handlePayClick}/>
       </div>
     </div>
   )

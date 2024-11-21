@@ -3,7 +3,7 @@ import CartItem from "@/components/Header/Cart/CartItem"
 import { cartQuery } from "@/controllers/api"
 import { useState, useEffect } from "react"
 
-export default function CheckoutCart({ pay }) {
+export default function CheckoutCart({ pay, setMainTotal }) {
 
   const [cart, setCart] = useState([])
   const [total, setTotal] = useState(null)
@@ -19,6 +19,10 @@ export default function CheckoutCart({ pay }) {
     checkCart()
   })
 
+  useEffect(() => {
+    setMainTotal(total)
+  }, [total])
+
   function ListCart(item, index) {
     return (
       <CartItem product={item} key={index} updated={checkCart} />
@@ -32,7 +36,7 @@ export default function CheckoutCart({ pay }) {
         <p className="font-bold">Total</p>
         <p>${total}</p>
       </div>
-      <button onClick={() => pay(total)} className="bg-foreground mt-5 py-2 px-1 w-full rounded text-white hover:bg-hoverColor">Pay</button>
+      <button onClick={() => pay()} className="bg-foreground mt-5 py-2 px-1 w-full rounded text-white hover:bg-hoverColor">Pay</button>
     </div>
   )
 }
