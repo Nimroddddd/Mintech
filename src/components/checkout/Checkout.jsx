@@ -78,8 +78,9 @@ export default function ChekoutPage() {
             label="Full Name"
             className='w-full'
             {...register("name", {
-              required: "This field is required!"
+              required: "Full name is required!"
             })}
+            helperText={errors.name?.message}
           />
           <TextField
             required
@@ -87,8 +88,9 @@ export default function ChekoutPage() {
             label="Email Address"
             className='w-full'
             {...register("email", {
-              required: "This field is required!"
+              required: "Email address is required!"
             })}
+            helperText={errors.email?.message}
           />
           <TextField
             required
@@ -96,6 +98,7 @@ export default function ChekoutPage() {
             label="Country"
             className='w-full'
             {...register("country", { required: "Country is required!" })}
+            helperText={errors.country?.message}
           />
           <TextField
             required
@@ -105,6 +108,7 @@ export default function ChekoutPage() {
             {...register("phone", {
               required: "Phone number is required!"
             })}
+            helperText={errors.phone?.message}
           />
           {selectedValue === "deliver" ? 
             <TextField
@@ -115,6 +119,7 @@ export default function ChekoutPage() {
               multiline
               rows={3}
               {...register("address", { required: "Delivery address is required!" })}
+              helperText={errors.address?.message}
             />
           : 
             <FormControl className='w-36'>
@@ -138,6 +143,7 @@ export default function ChekoutPage() {
             <Checkbox id="terms" {...register("terms", { required: "You must accept the terms and conditions." })} />
             <label htmlFor="terms">I have read and agreed to the Terms and Conditions</label>
           </div>
+          <p className="text-red-500">{errors.terms?.message}</p>
         </form>
       </div>
       <div className="flex flex-col py-5 px-5 sm:px-28 space-y-6 basis-full">
