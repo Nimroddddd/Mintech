@@ -47,7 +47,6 @@ function PhoneItem({item, index}) {
 
 function TVItem({item, index}) {
 
-  const api = process.env.NEXT_PUBLIC_API_URL
   const [added, setAdded] = useState(false)
 
 
@@ -91,7 +90,6 @@ function TVItem({item, index}) {
 
 function LaptopItem({item, index}) {
 
-  const api = process.env.NEXT_PUBLIC_API_URL
   const [added, setAdded] = useState(false)
 
 
@@ -133,7 +131,6 @@ function LaptopItem({item, index}) {
 
 function SmartwatchItem({item, index}) {
 
-  const api = process.env.NEXT_PUBLIC_API_URL
   const [added, setAdded] = useState(false)
 
 

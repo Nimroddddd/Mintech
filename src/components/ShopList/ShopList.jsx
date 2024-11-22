@@ -3,8 +3,9 @@ import { useEffect, useState } from "react"
 import ListDevices from "./ShopItem"
 import { getCookie } from "cookies-next"
 import axios from "axios"
+import { processData } from "@/controllers/api"
 
-export default function ShopList(props) {
+export default function ShopList({ category }) {
 
   const [sortBy, setSortBy] = useState("")
   const [devices, setDevices] = useState([])
@@ -21,12 +22,12 @@ export default function ShopList(props) {
 
   useEffect(() => {
     async function getDevices() {
-      const response = await axios.get(`${api}category/${props.category}`)
+      const response = await processData.getCategoryProducts(category)
       setDevices(response.data)
     }
     
     getDevices();
-  }, [props.category, api])
+  }, [category, api])
 
   if (sortBy == "price_asc") {
     devices.sort((a, b) => a.price - b.price)
@@ -65,7 +66,7 @@ export default function ShopList(props) {
 
   return (
     <div className="flex gap-20 flex-wrap">
-      <ListDevices category={props.category} devices={devices} />
+      <ListDevices category={category} devices={devices} />
     </div>
   )
 }

@@ -2,8 +2,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { getCookie, setCookie } from "cookies-next";
-import { cartQuery } from "@/controllers/api"
+import { getCookie } from "cookies-next";
+import { cartQuery, processData } from "@/controllers/api"
 
 
 export default function ProductDetail({productid}) {
@@ -12,7 +12,7 @@ export default function ProductDetail({productid}) {
   const [added, setAdded] = useState(false)
 
   const checkCart = () => {
-    const currentCart = getCookie("cart");
+    const currentCart = getCookie("cart") || [];
     if (currentCart.includes(productid)) {
       setAdded(true)
     } else {
@@ -33,7 +33,7 @@ export default function ProductDetail({productid}) {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`${api}product/${productid}`)
+        const response = await processData.getProductDetails(productid)
         setProductData(response.data)
       } catch (err) {
         console.error("Error fetching product details: ", err)

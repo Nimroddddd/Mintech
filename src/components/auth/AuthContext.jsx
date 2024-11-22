@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios"
+import { auth } from "@/controllers/api"
 
 const AuthContext = createContext();
 
@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
 
   const checkLogged = async () => {
     try {
-      const response = await axios.get(`${api}user`, { withCredentials: true });
+      const response = await auth.handleCheck()
       const { message } = response.data;
       if (message === "logged in") {
         setLogged(true)

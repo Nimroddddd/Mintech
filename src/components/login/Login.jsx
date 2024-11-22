@@ -1,5 +1,4 @@
 "use client"
-import axios from "axios";
 import { useState } from "react"
 import TextField from '@mui/material/TextField';
 import Link from "next/link";
@@ -16,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { Slide, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { auth } from "@/controllers/api";
 
 
 
@@ -61,7 +61,7 @@ export default function Login() {
     e.preventDefault()
     setLoading(true)
     try {
-      const response = await axios.post(`${api}login`, details, {withCredentials: true})
+      const response = await auth.handleLogin(details)
       const {message, cart} = response.data
       setCookie("cart", cart)
       if(message === "correct password") {

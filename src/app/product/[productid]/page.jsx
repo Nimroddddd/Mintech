@@ -2,8 +2,6 @@ import ProductDetail from "@/components/ProductDetail";
 
 
 export async function generateStaticParams() {
-  // Define all the possible category values you want to pre-render
-  // const response = await axios.get(`${api}productids`)
   const productids = [
     'ph_ip16p',  'ph_ss22', 'la_msiT',
     'la_msi63',  'la_asx5', 'la_ase2',

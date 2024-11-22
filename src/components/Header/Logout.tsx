@@ -1,11 +1,10 @@
 import LogoutIcon from '@mui/icons-material/Logout';
-import axios from 'axios';
+import { auth } from "@/controllers/api"
 
 export default function Logout() {
   
-  const api = process.env.NEXT_PUBLIC_API_URL
-  async function handleLogout() {
-    await axios.get(`${api}logout`, {withCredentials: true})
+  function handleLogout() {
+    auth.handleLogout()
   }
 
   return (

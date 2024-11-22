@@ -45,7 +45,7 @@ export default function Register() {
   async function handleRegister(data) {
     setLoading(true)
     try {
-      await axios.post(`${api}register`, data)
+      await axios.post(`${api}/auth/register`, data)
       success("Registration Succesful!")
       router.push("/login")
     } catch (err) {

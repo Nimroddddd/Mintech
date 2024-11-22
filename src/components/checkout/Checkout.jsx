@@ -11,7 +11,7 @@ import { Button,
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import OutboxIcon from '@mui/icons-material/Outbox';
 import CheckoutCart from "./CheckoutCart"
-import { cartQuery } from '@/controllers/api';
+import { processData } from '@/controllers/api';
 
 
 export default function ChekoutPage() {
@@ -24,6 +24,7 @@ export default function ChekoutPage() {
     email: "",
     amount: 0
   });
+  
 
   const handleStationChange = (event) => {
     setStation(event.target.value);
@@ -40,7 +41,7 @@ export default function ChekoutPage() {
   }
 
   async function handlePayClick() {
-    const link = await cartQuery.handlePay(details);
+    const link = await processData.handlePay(details);
     window.open(link, '_blank')
   }
 
@@ -51,7 +52,6 @@ export default function ChekoutPage() {
         amount: total
       }
     })
-    console.log(details)
   }
 
   return (
