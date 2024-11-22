@@ -137,6 +137,7 @@ export default function ChekoutPage() {
                 <MenuItem value={4}>Station 4</MenuItem>
                 <MenuItem value={5}>Station 5</MenuItem>
               </Select>
+              <p className="text-red-500">{errors.station?.message}</p>
             </FormControl>
           }
           <div className='flex items-center'>

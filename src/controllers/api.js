@@ -65,6 +65,11 @@ export const auth = {
 
   handleRegister: async (data) => {
     await axios.post(`${api}/auth/register`, data)
+  },
+
+  handleReset: async (details) => {
+    await axios.post(`${api}/auth/reset-password`, details)
+    return response
   }
 }
 

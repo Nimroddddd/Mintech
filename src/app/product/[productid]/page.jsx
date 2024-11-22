@@ -20,6 +20,6 @@ export async function generateStaticParams() {
 }
 
 export default async function ProductDetailPage({params}) {
-  const {productid} = await params;
+  const { productid } = await params;
   return <ProductDetail productid={productid} />
 }
