@@ -61,6 +61,10 @@ export const auth = {
   handleCheck: async () => {
     const response = await axios.get(`${api}/auth/user`, { withCredentials: true });
     return response;
+  },
+
+  handleRegister: async (data) => {
+    await axios.post(`${api}/auth/register`, data)
   }
 }
 

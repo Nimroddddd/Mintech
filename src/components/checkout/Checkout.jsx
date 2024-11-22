@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, 
         Radio, 
         TextField, 
@@ -12,46 +12,37 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import OutboxIcon from '@mui/icons-material/Outbox';
 import CheckoutCart from "./CheckoutCart"
 import { processData } from '@/controllers/api';
+import { useForm } from "react-hook-form";
+
+
 
 
 export default function ChekoutPage() {
 
   const [selectedValue, setSelectedValue] = useState("deliver")
-  const [station, setStation] = useState("")
-  const [details, setDetails] = useState({
+  const [amount, setAmount] = useState(0)
+  const {register, handleSubmit, watch, formState: { errors } } = useForm({defaultValues: {
     name: "",
-    phone: "",
     email: "",
-    amount: 0
-  });
+    phone: "",
+    terms: false,
+    address: "",
+    station: "",
+    country: "",
+  }})
   
 
-  const handleStationChange = (event) => {
-    setStation(event.target.value);
-  };
-
-  const handleDetailsChange = (event) => {
-    const { name, value } = event.target
-    setDetails(prev => {
-      return {
-        ...prev,
-        [name]: value
-      }
-    })
-  }
-
-  async function handlePayClick() {
-    const link = await processData.handlePay(details);
+  const handlePayClick = handleSubmit(async (data) => {
+    const paymentData = {
+      ...data,
+      amount
+    }
+    const link = await processData.handlePay(paymentData);
     window.open(link, '_blank')
-  }
+  })
 
   function updateMainTotal(total) {
-    setDetails((prev) => {
-      return {
-        ...prev,
-        amount: total
-      }
-    })
+    setAmount(total)
   }
 
   return (
@@ -86,33 +77,34 @@ export default function ChekoutPage() {
             id="outlined-required"
             label="Full Name"
             className='w-full'
-            name="name"
-            value={details.name}
-            onChange={handleDetailsChange}
+            {...register("name", {
+              required: "This field is required!"
+            })}
           />
           <TextField
             required
             id="outlined-required"
             label="Email Address"
             className='w-full'
-            name="email"
-            value={details.email}
-            onChange={handleDetailsChange}
+            {...register("email", {
+              required: "This field is required!"
+            })}
           />
           <TextField
             required
             id="outlined-required"
             label="Country"
             className='w-full'
+            {...register("country", { required: "Country is required!" })}
           />
           <TextField
             required
             id="outlined-required"
             label="Phone Number"
             className='w-full'
-            name="phone"
-            value={details.phone}
-            onChange={handleDetailsChange}
+            {...register("phone", {
+              required: "Phone number is required!"
+            })}
           />
           {selectedValue === "deliver" ? 
             <TextField
@@ -122,6 +114,7 @@ export default function ChekoutPage() {
               className='w-full'
               multiline
               rows={3}
+              {...register("address", { required: "Delivery address is required!" })}
             />
           : 
             <FormControl className='w-36'>
@@ -129,9 +122,9 @@ export default function ChekoutPage() {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={station}
                 label="Pickup Station"
-                onChange={handleStationChange}
+                value={watch("station")}
+                {...register("station", { required: "Pickup station is required!" })}
               >
                 <MenuItem value={1}>Station 1</MenuItem>
                 <MenuItem value={2}>Station 2</MenuItem>
@@ -142,7 +135,7 @@ export default function ChekoutPage() {
             </FormControl>
           }
           <div className='flex items-center'>
-            <Checkbox id="terms"/>
+            <Checkbox id="terms" {...register("terms", { required: "You must accept the terms and conditions." })} />
             <label htmlFor="terms">I have read and agreed to the Terms and Conditions</label>
           </div>
         </form>

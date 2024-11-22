@@ -7,6 +7,7 @@ import Link from "next/link";
 import LoadingComp from "../Loading/Loading";
 import { useState } from "react";
 import { Slide, toast } from "react-toastify";
+import { auth } from "@/controllers/api";
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
@@ -45,10 +46,11 @@ export default function Register() {
   async function handleRegister(data) {
     setLoading(true)
     try {
-      await axios.post(`${api}/auth/register`, data)
+      await auth.handleRegister(data)
       success("Registration Succesful!")
       router.push("/login")
     } catch (err) {
+      console.log(err)
       const { message } = err
       if (message === "Network Error") {
         error("Server is currently down.")
