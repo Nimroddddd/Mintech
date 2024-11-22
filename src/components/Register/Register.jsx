@@ -40,7 +40,6 @@ export default function Register() {
       theme: "colored",
       transition: Slide,
       });
-  const api = process.env.NEXT_PUBLIC_API_URL
   const router = useRouter()
 
   async function handleRegister(data) {

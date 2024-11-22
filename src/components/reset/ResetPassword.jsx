@@ -3,14 +3,13 @@ import { useState } from "react"
 import TextField from '@mui/material/TextField';
 import LoadingComp from "../Loading/Loading";
 import { useRouter } from "next/navigation";
-import { setCookie } from "cookies-next";
-import { useAuth } from "../auth/AuthContext";
+import { useParams } from "next/navigation";
 import { Slide, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { auth } from "@/controllers/api";
 
 
-export default function ResetPassword({link}) {
+export default function ResetPassword({token, email}) {
 
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -18,7 +17,8 @@ export default function ResetPassword({link}) {
     password: "",
     confirmPassword: ""
   });
-    const error = (message) => {toast.error(`${message}`, {
+
+  const error = (message) => {toast.error(`${message}`, {
     position: "bottom-right",
     autoClose: 5000,
     hideProgressBar: true,
@@ -29,6 +29,18 @@ export default function ResetPassword({link}) {
     theme: "colored",
     transition: Slide,
     });}
+
+  const success = (message) => toast.success(`${message}`, {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Slide,
+    });
 
   function handleChange(e) {
     const {name, value} = e.target;
@@ -41,12 +53,17 @@ export default function ResetPassword({link}) {
   async function handleLogin(e) {
     e.preventDefault()
     const resetDetails = {
-      ...details,
-      token: link
+      newPassword: details.password,
+      token,
+      email
     }
-    if (details.password !== "") {
-      if (details.password === details.confirmPassword) {
-        auth.handleReset(resetDetails)
+    if (details.password !== "" && details.password === details.confirmPassword) {
+      const response  = await auth.handleReset(resetDetails)
+      const { message } = response.data;
+      if (message === "Password update succeessful") {
+        success(`${message}. Please login again`)
+      } else {
+        error(message)
       }
     }
   }

@@ -18,12 +18,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { auth } from "@/controllers/api";
 
 
-
-
-
-
-
-
 export default function Login() {
 
   const router = useRouter()
@@ -47,6 +41,18 @@ export default function Login() {
     transition: Slide,
     });}
 
+    const success = (message) => toast.success(`${message}`, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      transition: Slide,
+      });
+
   const api = process.env.NEXT_PUBLIC_API_URL
 
   function handleChange(e) {
@@ -55,6 +61,26 @@ export default function Login() {
       ...prev,
       [name]: value
     })})
+  }
+
+  const handleResetRequest = async () => {
+    if (details.email === "") {
+      return;
+    }
+    setLoading(true)
+    try {
+      const response = await auth.handleGetResetMail({email: details.email})
+      const { message } = response.data;
+      if (message === "success" ) {
+        success("The reset link has been sent to your email")
+      } else if (message === "User not found") {
+        error(message)
+      }
+    } catch (err) {
+      error("Something went Wrong")
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function handleLogin(e) {
@@ -113,9 +139,12 @@ export default function Login() {
             onChange={handleChange}
           />
         </FormControl>
+        <div className="w-fit text-foreground" onClick={handleResetRequest}>
+          <Link href=""><p className="hover:underline">Forgot Password?</p></Link>
+        </div>
         <button type="submit" className="bg-foreground hover:bg-hoverColor py-3 text-white" onClick={handleLogin}>Login</button>
       </form>
-      <p className="mt-3">Don&apos;t have an account? <Link href="/register" className="text-foreground">Sign up here</Link></p>
+      <p className="mt-3">Don&apos;t have an account? <Link href="/register" className="text-foreground hover:underline">Sign up here</Link></p>
       {loading && <LoadingComp />}
     </div>
   )

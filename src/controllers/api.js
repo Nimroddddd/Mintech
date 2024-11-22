@@ -68,8 +68,13 @@ export const auth = {
   },
 
   handleReset: async (details) => {
-    await axios.post(`${api}/auth/reset-password`, details)
+    const response = await axios.post(`${api}/auth/reset-password`, details)
     return response
+  },
+
+  handleGetResetMail: async (details) => {
+    const response = await axios.post(`${api}/auth/reset-password-request`, details)
+    return response;
   }
 }
 
