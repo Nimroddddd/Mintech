@@ -40,7 +40,7 @@ export default function Header() {
         <li onClick={handleDrop}><Link href="/">Home</Link></li>
         <li onClick={handleDrop}><Link href="/shop/phones">Shop</Link></li>
         <li onClick={handleDrop}><Link href="https://aminabdulkabir.netlify.app">About us</Link></li>
-        <li onClick={handleDrop}>Contact</li>
+        <li onClick={handleDrop}><Link href="https://aminabdulkabir.netlify.app">Contact</Link></li>
         <Link href="/login" onClick={handleDrop}><Account /></Link>
       </ul>
     )
@@ -57,7 +57,7 @@ export default function Header() {
           <li><Link href="/">Home</Link></li>
           <li><Link href="/shop/phones">Shop</Link></li>
           <li><Link href="https://aminabdulkabir.netlify.app">About us</Link></li>
-          <li>Contact</li>
+          <li><Link href="https://aminabdulkabir.netlify.app">Contact</Link></li>
         </ul>
         <h2 className={`${dynapuff.className} text-2xl`}>Mintech</h2>
         <ul className="flex gap-2 sm:gap-4 text-base lg:text-xl">
