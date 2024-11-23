@@ -12,16 +12,18 @@ export default function CartItem({product, updated}) {
     updated()
   }
 
-  function handleIncrease() {
+  async function handleIncrease() {
     setCount(prev => prev+1)
-    cartQuery.handleUpdate(count+1, product.product_id)
+    await cartQuery.handleUpdate(count+1, product.product_id)
+    console.log("hi")
     updated()
   }
 
-  function handleDecrease() {
+  async function handleDecrease() {
     if (count > 1) {
       setCount(prev => prev-1)
-      cartQuery.handleUpdate(count-1, product.product_id)
+      await cartQuery.handleUpdate(count-1, product.product_id)
+      console.log("hi")
       updated()
     }
   }
