@@ -102,3 +102,45 @@ export const processData = {
   },
 
 }
+
+export const wishlistQuery = {
+  handleAdd: async (id) => {
+    let currentCart = []
+    currentCart = getCookie("wishlist")
+    if (currentCart) {
+      if (!currentCart.includes(id)){
+        const newCart = JSON.parse(currentCart)
+        newCart.push(id);
+        setCookie("wishlist", newCart)
+      } 
+    } else {
+      setCookie("wishlist", [id])
+    }
+    axios.get(`${api}/cart/add-to-wishlist/${id}`, {withCredentials: true})
+    return;
+  },
+
+  handleRemove: async (id) => {
+    const currentCart = getCookie("wishlist") || [];
+    console.log(currentCart)
+    console.log(currentCart)
+    const parsedCart = JSON.parse(currentCart);
+    const filteredCart = parsedCart.filter(product => product != id)
+    setCookie("wishlist", filteredCart);
+    await axios.delete(`${api}/cart/delete-from-wishlist/${id}`, {withCredentials: true})
+    return;
+  },
+
+  handleCheck: async () => {
+    try {
+      const response = await axios.get(`${api}/cart/get-wishlist`, {withCredentials: true})
+      return response.data
+    } catch {
+      const currentCart = getCookie("wishlist");
+      const parsedCart = currentCart ? JSON.parse(currentCart) : [];
+      const response = await axios.post(`${api}/cart/get-public-wishlist`, parsedCart)
+      return response.data
+    }
+  }
+
+}

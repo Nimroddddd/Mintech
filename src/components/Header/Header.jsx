@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import DisplayCart from "./Cart/DisplayCart"
+import DisplayWishlist from "./Cart/DisplayWishlist"
 import { useAuth } from "../auth/AuthContext"
 import { useCartStore } from "@/controllers/store"
 import { cartQuery } from "@/controllers/api"
@@ -23,7 +24,7 @@ export default function Header() {
 
   const { logged, checkLogged } = useAuth()
   const [dropped, setDropped] = useState(false)
-  const { displayCart, setDisplayCart, setCount } = useCartStore()
+  const { displayCart, setDisplayCart, setCount, displayWishlist, setDisplayWishlist } = useCartStore()
 
   async function checkCartCount() {
     const { count } = await cartQuery.handleCheck()
@@ -69,14 +70,25 @@ export default function Header() {
         <h2 className={`${dynapuff.className} text-2xl`}>Mintech</h2>
         <ul className="flex gap-2 sm:gap-4 text-base lg:text-xl">
           <div className="hidden md:block"><Link href="/login"><Account /></Link></div>
-          <Wishlist />
-          <div onClick={() => setDisplayCart()}><Link href=""><Cart active={displayCart} /></Link></div>
+          <div onClick={() => {
+            if (displayCart) {
+              setDisplayCart()
+            }
+            setDisplayWishlist()
+            }}><Link href=""><Wishlist active={displayWishlist} /></Link></div>
+          <div onClick={() => {
+            if (displayWishlist) {
+              setDisplayWishlist()
+            }
+            setDisplayCart()
+            }}><Link href=""><Cart active={displayCart} /></Link></div>
           {logged && <Link href="" onClick={logout}><Logout /></Link>}
           <div className="px-2 py-1 bg-foreground text-white md:hidden" onClick={handleDrop}>{dropped ? <ExpandLessIcon /> : <MenuIcon />}</div>
         </ul>
       </div>
       {dropped && <DropdownHeader />}
       {displayCart && <DisplayCart />}
+      {displayWishlist && <DisplayWishlist />}
     </div>
   )
 }

@@ -1,14 +1,15 @@
 import Link from "next/link"
-import { getCookie, setCookie } from "cookies-next"
+import { getCookie } from "cookies-next"
 import { useEffect, useState } from "react"
-import { cartQuery } from "@/controllers/api"
+import { cartQuery, wishlistQuery } from "@/controllers/api"
 import { useCartStore } from "@/controllers/store"
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 
 function PhoneItem({item, index}) {
 
   const [added, setAdded] = useState(false)
   const { count, setCount } = useCartStore();
-
 
   function checkCart() {
     const currentCart = getCookie("cart") || []
@@ -33,11 +34,17 @@ function PhoneItem({item, index}) {
     setCount(count-1)
   }
 
+  async function handleWishlistAdd() {
+    await wishlistQuery.handleAdd(item.product_id)
+  }
+
 
   return (
     <div key={index}>
-      <div className="bg-cover bg-center h-[300px] w-52 shadow-xl" style={{backgroundImage: `url("/phones/${item.img}")`}}>
-
+      <div className="relative bg-cover bg-center h-[300px] w-52 shadow-xl" style={{backgroundImage: `url("/phones/${item.img}")`}}>
+        <div className="border max-w-fit absolute top-5 right-1 rounded-full p-1 bg-foreground hover:scale-110 duration-300">
+          <button onClick={handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
+        </div>
       </div>
       <p className="text-2xl mt-5 mb-1">{item.name}</p>
       <p>${item.price}</p>
@@ -77,12 +84,16 @@ function TVItem({item, index}) {
     setCount(count-1)
   }
 
-
+  async function handleWishlistAdd() {
+    await wishlistQuery.handleAdd(item.product_id)
+  }
 
   return (
     <div key={index}>
-      <div className="bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/televisions/${item.img}")`}}>
-
+      <div className="relative bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/televisions/${item.img}")`}}>
+        <div className="border max-w-fit absolute top-5 right-1 rounded-full p-1 bg-foreground hover:scale-110 duration-300">
+          <button onClick={handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
+        </div>
       </div>
       <p className="text-2xl mt-5 mb-1">{item.name}</p>
       <p>${item.price}</p>
@@ -122,10 +133,16 @@ function LaptopItem({item, index}) {
     setCount(count-1)
   }
 
+  async function handleWishlistAdd() {
+    await wishlistQuery.handleAdd(item.product_id)
+  }
+
   return (
     <div key={index}>
-      <div className="bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/laptops/${item.img}")`}}>
-
+      <div className="relative bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/laptops/${item.img}")`}}>
+        <div className="border max-w-fit absolute top-5 right-1 rounded-full p-1 bg-foreground hover:scale-110 duration-300">
+          <button onClick={handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
+        </div>
       </div>
       <p className="text-2xl mt-5 mb-1">{item.name}</p>
       <p>${item.price}</p>
@@ -165,11 +182,17 @@ function SmartwatchItem({item, index}) {
     setCount(count-1)
   }
 
+  async function handleWishlistAdd() {
+    await wishlistQuery.handleAdd(item.product_id)
+  }
+
 
   return (
     <div key={index}>
-      <div className="bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/smartwatches/${item.img}")`}}>
-
+      <div className="relative bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/smartwatches/${item.img}")`}}>
+        <div className="border max-w-fit absolute top-5 right-1 rounded-full p-1 bg-foreground hover:scale-110 duration-300">
+          <button onClick={handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
+        </div>
       </div>
       <p className="text-2xl mt-5 mb-1">{item.name}</p>
       <p>${item.price}</p>

@@ -6,7 +6,7 @@ import { cartQuery } from "@/controllers/api"
 import { useCartStore } from "@/controllers/store"
 
 
-export default function DisplayCart() {
+export default function DisplayWishList() {
 
 
   const [cart, setCart] = useState([])
