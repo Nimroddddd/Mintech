@@ -9,7 +9,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 function PhoneItem({item, index}) {
 
   const [added, setAdded] = useState(false)
-  const { count, setCount } = useCartStore();
+  const [wishlistAdded, setWishlistAdded] = useState(false)
+  const { count, setCount, wishCount, setWishCount } = useCartStore();
 
   function checkCart() {
     const currentCart = getCookie("cart") || []
@@ -20,7 +21,19 @@ function PhoneItem({item, index}) {
     }
   }
 
-  useEffect(checkCart)
+  function checkWishlist() {
+    const currentWishlist = getCookie("wishlist") || []
+    if (currentWishlist.includes(item.product_id)) {
+      setWishlistAdded(true)
+    } else {
+      setWishlistAdded(false)
+    }
+  }
+
+  useEffect(() => {
+    checkCart();
+    checkWishlist();
+  })
 
   function handleAdd() {
     cartQuery.handleAdd(item.product_id)
@@ -36,14 +49,22 @@ function PhoneItem({item, index}) {
 
   async function handleWishlistAdd() {
     await wishlistQuery.handleAdd(item.product_id)
+    setWishCount(wishCount+1)
+    checkWishlist()
+  }
+
+  async function handleWishlistRemove() {
+    await wishlistQuery.handleRemove(item.product_id)
+    setWishCount(wishCount-1)
+    checkWishlist()
   }
 
 
   return (
     <div key={index}>
       <div className="relative bg-cover bg-center h-[300px] w-52 shadow-xl" style={{backgroundImage: `url("/phones/${item.img}")`}}>
-        <div className="border max-w-fit absolute top-5 right-1 rounded-full p-1 bg-foreground hover:scale-110 duration-300">
-          <button onClick={handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
+        <div className={`border max-w-fit absolute top-5 right-1 rounded-full p-1 hover:scale-110 duration-300 ${wishlistAdded ? "bg-black" : "bg-foreground"}`}>
+          <button onClick={wishlistAdded ? handleWishlistRemove : handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
         </div>
       </div>
       <p className="text-2xl mt-5 mb-1">{item.name}</p>
@@ -59,7 +80,8 @@ function PhoneItem({item, index}) {
 function TVItem({item, index}) {
 
   const [added, setAdded] = useState(false)
-  const { count, setCount } = useCartStore();
+  const [wishlistAdded, setWishlistAdded] = useState(false)
+  const { count, setCount, wishCount, setWishCount } = useCartStore();
 
   function checkCart() {
     const currentCart = getCookie("cart") || []
@@ -70,7 +92,19 @@ function TVItem({item, index}) {
     }
   }
 
-  useEffect(checkCart)
+  function checkWishlist() {
+    const currentWishlist = getCookie("wishlist") || []
+    if (currentWishlist.includes(item.product_id)) {
+      setWishlistAdded(true)
+    } else {
+      setWishlistAdded(false)
+    }
+  }
+
+  useEffect(() => {
+    checkCart();
+    checkWishlist();
+  })
 
   function handleAdd() {
     cartQuery.handleAdd(item.product_id)
@@ -86,13 +120,21 @@ function TVItem({item, index}) {
 
   async function handleWishlistAdd() {
     await wishlistQuery.handleAdd(item.product_id)
+    setWishCount(wishCount+1)
+    checkWishlist()
+  }
+
+  async function handleWishlistRemove() {
+    await wishlistQuery.handleRemove(item.product_id)
+    setWishCount(wishCount-1)
+    checkWishlist()
   }
 
   return (
     <div key={index}>
       <div className="relative bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/televisions/${item.img}")`}}>
-        <div className="border max-w-fit absolute top-5 right-1 rounded-full p-1 bg-foreground hover:scale-110 duration-300">
-          <button onClick={handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
+        <div className={`border max-w-fit absolute top-5 right-1 rounded-full p-1 hover:scale-110 duration-300 ${wishlistAdded ? "bg-black" : "bg-foreground"}`}>
+          <button onClick={wishlistAdded ? handleWishlistRemove : handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
         </div>
       </div>
       <p className="text-2xl mt-5 mb-1">{item.name}</p>
@@ -108,7 +150,8 @@ function TVItem({item, index}) {
 function LaptopItem({item, index}) {
 
   const [added, setAdded] = useState(false)
-  const { count, setCount } = useCartStore();
+  const [wishlistAdded, setWishlistAdded] = useState(false)
+  const { count, setCount, wishCount, setWishCount } = useCartStore();
 
   function checkCart() {
     const currentCart = getCookie("cart") || []
@@ -119,7 +162,19 @@ function LaptopItem({item, index}) {
     }
   }
 
-  useEffect(checkCart)
+  function checkWishlist() {
+    const currentWishlist = getCookie("wishlist") || []
+    if (currentWishlist.includes(item.product_id)) {
+      setWishlistAdded(true)
+    } else {
+      setWishlistAdded(false)
+    }
+  }
+
+  useEffect(() => {
+    checkCart();
+    checkWishlist();
+  })
 
   function handleAdd() {
     cartQuery.handleAdd(item.product_id)
@@ -135,13 +190,21 @@ function LaptopItem({item, index}) {
 
   async function handleWishlistAdd() {
     await wishlistQuery.handleAdd(item.product_id)
+    setWishCount(wishCount+1)
+    checkWishlist()
+  }
+
+  async function handleWishlistRemove() {
+    await wishlistQuery.handleRemove(item.product_id)
+    setWishCount(wishCount-1)
+    checkWishlist()
   }
 
   return (
     <div key={index}>
       <div className="relative bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/laptops/${item.img}")`}}>
-        <div className="border max-w-fit absolute top-5 right-1 rounded-full p-1 bg-foreground hover:scale-110 duration-300">
-          <button onClick={handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
+        <div className={`border max-w-fit absolute top-5 right-1 rounded-full p-1 hover:scale-110 duration-300 ${wishlistAdded ? "bg-black" : "bg-foreground"}`}>
+          <button onClick={wishlistAdded ? handleWishlistRemove : handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
         </div>
       </div>
       <p className="text-2xl mt-5 mb-1">{item.name}</p>
@@ -157,7 +220,8 @@ function LaptopItem({item, index}) {
 function SmartwatchItem({item, index}) {
 
   const [added, setAdded] = useState(false)
-  const { count, setCount } = useCartStore();
+  const [wishlistAdded, setWishlistAdded] = useState(false)
+  const { count, setCount, wishCount, setWishCount } = useCartStore();
 
   function checkCart() {
     const currentCart = getCookie("cart") || []
@@ -168,7 +232,19 @@ function SmartwatchItem({item, index}) {
     }
   }
 
-  useEffect(checkCart)
+  function checkWishlist() {
+    const currentWishlist = getCookie("wishlist") || []
+    if (currentWishlist.includes(item.product_id)) {
+      setWishlistAdded(true)
+    } else {
+      setWishlistAdded(false)
+    }
+  }
+
+  useEffect(() => {
+    checkCart();
+    checkWishlist();
+  })
 
   function handleAdd() {
     cartQuery.handleAdd(item.product_id)
@@ -184,14 +260,22 @@ function SmartwatchItem({item, index}) {
 
   async function handleWishlistAdd() {
     await wishlistQuery.handleAdd(item.product_id)
+    setWishCount(wishCount+1)
+    checkWishlist()
+  }
+
+  async function handleWishlistRemove() {
+    await wishlistQuery.handleRemove(item.product_id)
+    setWishCount(wishCount-1)
+    checkWishlist()
   }
 
 
   return (
     <div key={index}>
       <div className="relative bg-cover bg-center h-[200px] w-60 shadow-xl" style={{backgroundImage: `url("/smartwatches/${item.img}")`}}>
-        <div className="border max-w-fit absolute top-5 right-1 rounded-full p-1 bg-foreground hover:scale-110 duration-300">
-          <button onClick={handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
+        <div className={`border max-w-fit absolute top-5 right-1 rounded-full p-1 hover:scale-110 duration-300 ${wishlistAdded ? "bg-black" : "bg-foreground"}`}>
+          <button onClick={wishlistAdded ? handleWishlistRemove : handleWishlistAdd}><FavoriteBorderIcon fontSize="large" className="text-white"/></button>
         </div>
       </div>
       <p className="text-2xl mt-5 mb-1">{item.name}</p>
