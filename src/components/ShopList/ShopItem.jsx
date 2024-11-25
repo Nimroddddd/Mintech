@@ -2,10 +2,12 @@ import Link from "next/link"
 import { getCookie, setCookie } from "cookies-next"
 import { useEffect, useState } from "react"
 import { cartQuery } from "@/controllers/api"
+import { useCartStore } from "@/controllers/store"
 
 function PhoneItem({item, index}) {
 
   const [added, setAdded] = useState(false)
+  const { count, setCount } = useCartStore();
 
 
   function checkCart() {
@@ -22,11 +24,13 @@ function PhoneItem({item, index}) {
   function handleAdd() {
     cartQuery.handleAdd(item.product_id)
     checkCart()
+    setCount(count+1)
   }
 
   function handleRemove() {
     cartQuery.handleRemove(item.product_id)
     checkCart()
+    setCount(count-1)
   }
 
 
@@ -48,7 +52,7 @@ function PhoneItem({item, index}) {
 function TVItem({item, index}) {
 
   const [added, setAdded] = useState(false)
-
+  const { count, setCount } = useCartStore();
 
   function checkCart() {
     const currentCart = getCookie("cart") || []
@@ -64,11 +68,13 @@ function TVItem({item, index}) {
   function handleAdd() {
     cartQuery.handleAdd(item.product_id)
     checkCart()
+    setCount(count+1)
   }
 
   function handleRemove() {
     cartQuery.handleRemove(item.product_id)
     checkCart()
+    setCount(count-1)
   }
 
 
@@ -91,7 +97,7 @@ function TVItem({item, index}) {
 function LaptopItem({item, index}) {
 
   const [added, setAdded] = useState(false)
-
+  const { count, setCount } = useCartStore();
 
   function checkCart() {
     const currentCart = getCookie("cart") || []
@@ -107,11 +113,13 @@ function LaptopItem({item, index}) {
   function handleAdd() {
     cartQuery.handleAdd(item.product_id)
     checkCart()
+    setCount(count+1)
   }
 
   function handleRemove() {
     cartQuery.handleRemove(item.product_id)
     checkCart()
+    setCount(count-1)
   }
 
   return (
@@ -132,7 +140,7 @@ function LaptopItem({item, index}) {
 function SmartwatchItem({item, index}) {
 
   const [added, setAdded] = useState(false)
-
+  const { count, setCount } = useCartStore();
 
   function checkCart() {
     const currentCart = getCookie("cart") || []
@@ -148,11 +156,13 @@ function SmartwatchItem({item, index}) {
   function handleAdd() {
     cartQuery.handleAdd(item.product_id)
     checkCart()
+    setCount(count+1)
   }
 
   function handleRemove() {
     cartQuery.handleRemove(item.product_id)
     checkCart()
+    setCount(count-1)
   }
 
 

@@ -4,12 +4,14 @@ import { useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { cartQuery, processData } from "@/controllers/api"
+import { useCartStore } from "@/controllers/store";
 
 
 export default function ProductDetail({productid}) {
   const api = process.env.NEXT_PUBLIC_API_URL
   const [productData, setProductData] = useState(null)
   const [added, setAdded] = useState(false)
+  const { count, setCount } = useCartStore();
 
   const checkCart = () => {
     const currentCart = getCookie("cart") || [];
@@ -21,12 +23,15 @@ export default function ProductDetail({productid}) {
   }
 
   function handleAdd() {
+    console.log(productid)
     cartQuery.handleAdd(productid)
+    setCount(count+1)
     checkCart()
   }
 
   function handleRemove() {
     cartQuery.handleRemove(productid)
+    setCount(count-1)
     checkCart()
   }
 

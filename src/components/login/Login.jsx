@@ -16,12 +16,15 @@ import InputLabel from '@mui/material/InputLabel';
 import { Slide, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { auth } from "@/controllers/api";
+import { useCartStore } from "@/controllers/store";
+import { cartQuery } from "@/controllers/api";
 
 
 export default function Login() {
 
   const router = useRouter()
   const { checkLogged } = useAuth()
+  const { setCount } = useCartStore()
   const [loading, setLoading] = useState(false)
   const [details, setDetails] = useState({
     email: "",
@@ -53,7 +56,10 @@ export default function Login() {
       transition: Slide,
       });
 
-  const api = process.env.NEXT_PUBLIC_API_URL
+    async function checkCartCount() {
+    const { count } = await cartQuery.handleCheck()
+    setCount(count)
+  }
 
   function handleChange(e) {
     const {name, value} = e.target;
@@ -92,6 +98,7 @@ export default function Login() {
       setCookie("cart", cart)
       if(message === "correct password") {
         checkLogged()
+        checkCartCount();
         router.push("/")
       } else {
         error(message)

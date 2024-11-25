@@ -16,7 +16,8 @@ export const cartQuery = {
     } else {
       setCookie("cart", [id])
     }
-    await axios.get(`${api}/cart/add-to-cart/${id}`, {withCredentials: true})
+    axios.get(`${api}/cart/add-to-cart/${id}`, {withCredentials: true})
+    return;
   },
 
   handleRemove: async (id) => {
@@ -25,6 +26,7 @@ export const cartQuery = {
     const filteredCart = parsedCart.filter(product => product != id)
     setCookie("cart", filteredCart);
     await axios.delete(`${api}/cart/delete-from-cart/${id}`, {withCredentials: true})
+    return;
   },
 
   handleCheck: async () => {

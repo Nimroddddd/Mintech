@@ -11,6 +11,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import DisplayCart from "./Cart/DisplayCart"
 import { useAuth } from "../auth/AuthContext"
 import { useCartStore } from "@/controllers/store"
+import { cartQuery } from "@/controllers/api"
 
 
 const dynapuff = DynaPuff({
@@ -22,10 +23,16 @@ export default function Header() {
 
   const { logged, checkLogged } = useAuth()
   const [dropped, setDropped] = useState(false)
-  const { displayCart, setDisplayCart } = useCartStore()
+  const { displayCart, setDisplayCart, setCount } = useCartStore()
+
+  async function checkCartCount() {
+    const { count } = await cartQuery.handleCheck()
+    setCount(count)
+  }
 
   useEffect(() => {
     checkLogged();
+    checkCartCount();
 
   }, [])
 
