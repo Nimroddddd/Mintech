@@ -58,13 +58,21 @@ export default function ResetPassword({token, email}) {
       email
     }
     if (details.password !== "" && details.password === details.confirmPassword) {
-      const response  = await auth.handleReset(resetDetails)
-      const { message } = response.data;
-      if (message === "Password update succeessful") {
-        success(`${message}. Please login again`)
-      } else {
-        error(message)
+      try {
+        const response = await auth.handleReset(resetDetails)
+        console.log(response)
+        const { message } = response.data;
+        if (message === "Password update succeessful") {
+          success(`${message}. Please login again`)
+        } else {
+          error(message)
+        }
+      } catch (err) {
+        error("Server is down.")
       }
+      
+    } else {
+      error("Passwords do not match. Please try again.")
     }
   }
 
@@ -77,6 +85,7 @@ export default function ResetPassword({token, email}) {
         label="Password" 
         variant="outlined"
         value={details.password}
+        type="password"
         name="password"
         onChange={handleChange}
         />
@@ -84,6 +93,7 @@ export default function ResetPassword({token, email}) {
         id="outlined-basic" 
         label="Confirm Password" 
         variant="outlined"
+        type="password"
         value={details.confirmPassword}
         name="confirmPassword"
         onChange={handleChange}
