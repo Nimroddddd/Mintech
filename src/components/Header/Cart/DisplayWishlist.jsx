@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import WishlistItem from "./WishlistItem"
 import { wishlistQuery } from "@/controllers/api"
 import { useCartStore } from "@/controllers/store"
+import { Zoom } from "@mui/material"
 
 
 export default function DisplayCart() {
@@ -29,14 +30,16 @@ export default function DisplayCart() {
 
 
   return (
-    <div className="flex justify-end w-full h-screen bg-black bg-opacity-50 absolute duration-300">
-      <div className="flex flex-col items-center bg-background  min-w-full sm:min-w-[460px]">
-        <div className="w-full max-h-[70vh] text-center overflow-y-scroll">
-          <p className="text-2xl mb-5">My Wishlist</p>
-          <hr />
-          {wishlist.map(ListCart)}
+    <Zoom in={true}>
+      <div className="flex justify-end w-full h-screen bg-black bg-opacity-50 absolute duration-300">
+        <div className="flex flex-col items-center bg-background  min-w-full sm:min-w-[460px]">
+          <div className="w-full max-h-[70vh] text-center overflow-y-scroll">
+            <p className="text-2xl mb-5">My Wishlist</p>
+            <hr />
+            {wishlist.map(ListCart)}
+          </div>
         </div>
       </div>
-    </div>
+    </Zoom>
   )
 }

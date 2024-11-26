@@ -12,7 +12,7 @@ import DisplayCart from "./Cart/DisplayCart"
 import DisplayWishlist from "./Cart/DisplayWishlist"
 import { useAuth } from "../auth/AuthContext"
 import { useCartStore } from "@/controllers/store"
-import { cartQuery } from "@/controllers/api"
+import { cartQuery, wishlistQuery } from "@/controllers/api"
 
 
 const dynapuff = DynaPuff({
@@ -24,16 +24,18 @@ export default function Header() {
 
   const { logged, checkLogged } = useAuth()
   const [dropped, setDropped] = useState(false)
-  const { displayCart, setDisplayCart, setCount, displayWishlist, setDisplayWishlist } = useCartStore()
+  const { displayCart, setDisplayCart, setCount, displayWishlist, setDisplayWishlist, setWishCount } = useCartStore()
 
-  async function checkCartCount() {
-    const { count } = await cartQuery.handleCheck()
-    setCount(count)
+  async function checkCount() {
+    const { count: cartCount } = await cartQuery.handleCheck()
+    const { count: wishCount } = await wishlistQuery.handleCheck()
+    setCount(cartCount)
+    setWishCount(wishCount)
   }
 
   useEffect(() => {
     checkLogged();
-    checkCartCount();
+    checkCount();
 
   }, [])
 

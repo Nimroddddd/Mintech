@@ -15,7 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { Slide, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { auth } from "@/controllers/api";
+import { auth, wishlistQuery } from "@/controllers/api";
 import { useCartStore } from "@/controllers/store";
 import { cartQuery } from "@/controllers/api";
 
@@ -24,7 +24,7 @@ export default function Login() {
 
   const router = useRouter()
   const { checkLogged } = useAuth()
-  const { setCount } = useCartStore()
+  const { setCount, setWishCount } = useCartStore()
   const [loading, setLoading] = useState(false)
   const [details, setDetails] = useState({
     email: "",
@@ -56,9 +56,11 @@ export default function Login() {
       transition: Slide,
       });
 
-    async function checkCartCount() {
-    const { count } = await cartQuery.handleCheck()
-    setCount(count)
+    async function checkCount() {
+    const { count: cartCount } = await cartQuery.handleCheck()
+    const { count: wishCount } = await wishlistQuery.handleCheck()
+    setCount(cartCount)
+    setWishCount(wishCount)
   }
 
   function handleChange(e) {
@@ -73,19 +75,19 @@ export default function Login() {
     if (details.email === "") {
       return;
     }
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await auth.handleGetResetMail({email: details.email})
       const { message } = response.data;
       if (message === "success" ) {
-        success("The reset link has been sent to your email")
+        success("The reset link has been sent to your email");
       } else if (message === "User not found") {
-        error(message)
+        error(message);
       }
     } catch (err) {
       error("Something went Wrong")
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -93,20 +95,20 @@ export default function Login() {
     e.preventDefault()
     setLoading(true)
     try {
-      const response = await auth.handleLogin(details)
-      const {message, cart} = response.data
-      setCookie("cart", cart)
+      const response = await auth.handleLogin(details);
+      const {message, cart} = response.data;
+      setCookie("cart", cart);
       if(message === "correct password") {
-        checkLogged()
-        checkCartCount();
-        router.push("/")
+        checkLogged();
+        checkCount();
+        router.push("/");
       } else {
-        error(message)
+        error(message);
       }
     } catch (err) {
-      alert(err)
+      alert(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
