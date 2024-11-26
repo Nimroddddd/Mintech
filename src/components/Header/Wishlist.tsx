@@ -2,7 +2,7 @@ import { useCartStore } from '@/controllers/store';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Badge } from '@mui/material';
 
-export default function Wishlist({active}) {
+export default function Wishlist({active}: {active: boolean}) {
 
   const { wishCount } = useCartStore()
   
