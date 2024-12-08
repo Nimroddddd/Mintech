@@ -96,7 +96,8 @@ export default function Login() {
     setLoading(true)
     try {
       const response = await auth.handleLogin(details);
-      const {message, cart} = response.data;
+      const {message, cart, token} = response.data;
+      localStorage.setItem("mintech", token);
       setCookie("cart", cart);
       if(message === "correct password") {
         checkLogged();

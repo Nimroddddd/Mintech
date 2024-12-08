@@ -2,6 +2,18 @@ import axios from "axios";
 import { getCookie, setCookie } from "cookies-next";
 
 const api = process.env.NEXT_PUBLIC_API_URL
+const instance = axios.create({
+  baseURL: api,
+  timeout: 60 * 60 * 2
+})
+
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("mintech");
+  if (token) {
+    config.headers.Authorization = token;
+  }
+  return config;
+});
 
 export const cartQuery = {
   handleAdd: async (id) => {
@@ -16,7 +28,7 @@ export const cartQuery = {
     } else {
       setCookie("cart", [id])
     }
-    axios.get(`${api}/cart/add-to-cart/${id}`, {withCredentials: true})
+    instance.get(`/cart/add-to-cart/${id}`)
     return;
   },
 
@@ -25,13 +37,13 @@ export const cartQuery = {
     const parsedCart = JSON.parse(currentCart);
     const filteredCart = parsedCart.filter(product => product != id)
     setCookie("cart", filteredCart);
-    await axios.delete(`${api}/cart/delete-from-cart/${id}`, {withCredentials: true})
+    await instance.delete(`${api}/cart/delete-from-cart/${id}`)
     return;
   },
 
   handleCheck: async () => {
     try {
-      const response = await axios.get(`${api}/cart/get-cart`, {withCredentials: true})
+      const response = await instance.get(`/cart/get-cart`)
       return response.data
     } catch {
       const currentCart = getCookie("cart");
@@ -43,7 +55,7 @@ export const cartQuery = {
 
   handleUpdate: async (count, id) => {
     try {
-      await axios.post(`${api}/cart/update-cart`, {count, id}, {withCredentials: true})
+      await instance.post(`/cart/update-cart`, {count, id})
       return;
     } catch {
       console.log("error triggered")
@@ -53,16 +65,16 @@ export const cartQuery = {
 
 export const auth = {
   handleLogout: () => {
-    axios.get(`${api}/auth/logout`, {withCredentials: true})
+    localStorage.removeItem("mintech")
   },
 
   handleLogin: async (details) => {
-    const response = await axios.post(`${api}/auth/login`, details, {withCredentials: true})
+    const response = await axios.post(`${api}/auth/login`, details)
     return response
   },
 
   handleCheck: async () => {
-    const response = await axios.get(`${api}/auth/user`, { withCredentials: true });
+    const response = await instance.get(`${api}/auth/user`)
     return response;
   },
 
@@ -116,7 +128,7 @@ export const wishlistQuery = {
     } else {
       setCookie("wishlist", [id])
     }
-    axios.get(`${api}/cart/add-to-wishlist/${id}`, {withCredentials: true})
+    instance.get(`/cart/add-to-wishlist/${id}`)
     return;
   },
 
@@ -127,13 +139,13 @@ export const wishlistQuery = {
     const parsedCart = JSON.parse(currentCart);
     const filteredCart = parsedCart.filter(product => product != id)
     setCookie("wishlist", filteredCart);
-    await axios.delete(`${api}/cart/delete-from-wishlist/${id}`, {withCredentials: true})
+    await instance.delete(`/cart/delete-from-wishlist/${id}`)
     return;
   },
 
   handleCheck: async () => {
     try {
-      const response = await axios.get(`${api}/cart/get-wishlist`, {withCredentials: true})
+      const response = await instance.get(`${api}/cart/get-wishlist`)
       return response.data
     } catch {
       const currentCart = getCookie("wishlist");

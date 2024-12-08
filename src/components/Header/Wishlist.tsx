@@ -8,7 +8,7 @@ export default function Wishlist({active}: {active: boolean}) {
   
   return (
     <li className={`flex border rounded px-2 py-1 ${active ? "bg-black" : "bg-foreground"} text-white`}>
-      <Badge badgeContent={wishCount} invisible={wishCount == 0} sx={{
+      <Badge badgeContent={wishCount} invisible={wishCount <= 0} sx={{
           '& .MuiBadge-badge': {
             minWidth: '12px',  // Smaller badge width
             height: '12px',   // Smaller badge height
